@@ -2,7 +2,7 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser')
 var logger = require('morgan');
-// var db = require('./config/db');
+var db = require('./config/db');
 // var todoroutes_v1 = require('./api/todo.routes.v1');
 // var auth_routes_v1 = require('./api/authentication.routes.v1');
 var config = require('./config/config');
@@ -45,6 +45,17 @@ app.use(function(err, req, res, next) {
     res.status(401).send(error);
 });
 
+app.get('/films', function(req, res) {
+    res.contentType('application/json');
+
+    db.query('SELECT * FROM film', function(error, rows, fields) {
+        if (error) {
+            res.status(401).json(error);
+        } else {
+            res.status(200).json({ result: rows });
+        };
+    });
+});
 
 app.use('*', function(req, res) {
     res.status(400);
@@ -52,7 +63,6 @@ app.use('*', function(req, res) {
         'error': 'Deze URL is niet beschikbaar.'
     });
 });
-
 
 app.listen(process.env.PORT || 3000, function() {
     console.log('De ToDo server luistert op port ' + app.get('port'));
