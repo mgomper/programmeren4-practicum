@@ -3,7 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var logger = require('morgan');
 var db = require('./config/db');
-// var todoroutes_v1 = require('./api/todo.routes.v1');
+var filmroutes_v1 = require('./api/film.routes.v1');
 // var auth_routes_v1 = require('./api/authentication.routes.v1');
 var config = require('./config/config');
 var expressJWT = require('express-jwt');
@@ -32,7 +32,7 @@ app.set('port', (process.env.PORT | config.webPort));
 app.set('env', (process.env.ENV | 'development'))
 
 // app.use('/api/v1', auth_routes_v1);
-// app.use('/api/v1', todoroutes_v1);
+app.use('/api/v1', filmroutes_v1);
 
 app.use(function(err, req, res, next) {
     // console.dir(err);
