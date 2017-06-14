@@ -2,21 +2,41 @@ var express = require('express');
 var routes = express.Router();
 var db = require('../config/db');
 
-// Maakt een nieuwe uitlening voor de gegeven gebruiker van het exemplaar met gegeven inventoryid
-routes.post('/rentals/:customer_id/:inventory_id', function(req, res) {
 
-    var customerId = req.params.customer_id;
-    var inventoryId = req.params.inventory_id;
+
+
+///Maakt een nieuwe uitlening voor de gegeven gebruiker van het exemplaar met gegeven inventoryid.
+routes.post('/rentals/:userid/:inventoryid', function(req, res) {
+
+    var user = req.params.userid;
+    var inventory = req.params.inventoryid;
+
+    res.contentType('application/json');
+
+    db.query('INSERT INTO rental(customer_id, inventory_id) VALUES (?, ?);', [user, inventory], function(error, rows, fields) {
+        if (error) {
+            res.status(401).json(error);
+        } else {
+            res.status(200).json({ result: rows });
+        };
+    });
+});
+
+
+//Wijzig bestaande uitlening voor gegeven gebruiker van het exemplaar met gegeven inventory-id
+routes.put('/rentals/:userid/:inventoryid', function(req, res) {
+
+    var user = req.params.userid;
+    var inventory = req.params.inventoryid;
+    
     var query = {
-        sql: 'INSERT INTO `rental`(`customer_id`, `inventory_id`) VALUES (?, ?)',
-        values: [customerId, inventoryId],
+        sql: 'UPDATE `rental` SET customer_id=? , inventory_id=?',
+        values: [rental.Title, rental.Beschrijving, ID],
         timeout: 2000 // 2secs
     };
 
-    // console.dir(rentals);
-    // console.log('Onze query: ' + query.sql);
-
     res.contentType('application/json');
+
     db.query(query, function(error, rows, fields) {
         if (error) {
             res.status(401).json(error);
