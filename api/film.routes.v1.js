@@ -5,7 +5,7 @@ var db = require('../config/db');
 
 // Geef een lijst van alle films 
 routes.get('/films', function(req, res) {
-	
+
     res.contentType('application/json');
 
     db.query('SELECT * FROM film', function(error, rows, fields) {
@@ -18,7 +18,7 @@ routes.get('/films', function(req, res) {
 });
 
 
-//Endpoint 3 - Geeft alle informatie van de gevraagde films
+//Endpoint 3 - Geeft alle informatie van de gevraagde films met een offset en count
 routes.get('/films', function(req, res) {
 
     var offset = parseInt(req.query.offset);
