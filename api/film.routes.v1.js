@@ -3,16 +3,28 @@ var routes = express.Router();
 var db = require('../config/db');
 
 
+// Geef een lijst van alle films 
+routes.get('/films', function(req, res) {
+	
+    res.contentType('application/json');
+
+    db.query('SELECT * FROM film', function(error, rows, fields) {
+        if (error) {
+            res.status(401).json(error);
+        } else {
+            res.status(200).json({ result: rows });
+        };
+    });
+});
 
 
-//Endpoint 3 Geeft alle informatie van de gevraagde films
+//Endpoint 3 - Geeft alle informatie van de gevraagde films
 routes.get('/films', function(req, res) {
 
     var offset = parseInt(req.query.offset);
     var count = parseInt(req.query.count);
 
-
-    res.contentType('application/json');
+	res.contentType('application/json');
 
     db.query('SELECT * FROM film LIMIT ? OFFSET ?', [count, offset], function(error, rows, fields) {
         if (error) {
@@ -79,12 +91,11 @@ routes.post('/rentals/:userid/:inventoryid', function(req, res) {
 // Endpoint 7 - Bestaande uitlening wijzigen
 routes.put('/rentals/:userid/:inventoryid', function(req, res) {
 
-    // var user = req.params.userid;
-    // var inventory = req.params.inventoryid;
     var user = req.params.userid;
     var inventory = req.params.inventoryid;
 
     res.contentType('application/json');
+
     db.query('UPDATE rental SET inventory_id=? WHERE customer_id=?', [user, inventory], function(error, rows, fields) {
         if (error) {
             res.status(401).json(error);
@@ -101,8 +112,7 @@ routes.delete('/rentals/:userid/:inventoryid', function(req, res) {
     var user = req.params.userid;
     var inventory = req.params.inventoryid;
 
-
-    res.contentType('application/json');
+	res.contentType('application/json');
 
     db.query('DELETE FROM rental WHERE customer_id=? AND inventory_id=?', [user, inventory], function(error, rows, fields) {
         if (error) {
