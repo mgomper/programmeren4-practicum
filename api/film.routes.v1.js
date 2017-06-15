@@ -23,20 +23,18 @@ routes.post('/rentals/:userid/:inventoryid', function(req, res) {
 });
 
 
-//Wijzig bestaande uitlening voor gegeven gebruiker van het exemplaar met gegeven inventory-id
 routes.put('/rentals/:userid/:inventoryid', function(req, res) {
 
-    var user = req.params.userid;
-    var inventory = req.params.inventoryid;
-    
+    // var user = req.params.userid;
+    // var inventory = req.params.inventoryid;
+    var user = req.body;
     var query = {
-        sql: 'UPDATE `rental` SET customer_id=? , inventory_id=?',
-        values: [rental.Title, rental.Beschrijving, ID],
+        sql: 'UPDATE rental SET inventory_id=? WHERE customer_id=? ',
+        values: [user.customer_id, user.inventory_id],
         timeout: 2000 // 2secs
     };
 
     res.contentType('application/json');
-
     db.query(query, function(error, rows, fields) {
         if (error) {
             res.status(401).json(error);
