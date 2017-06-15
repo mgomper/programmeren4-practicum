@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var auth = require('../auth/authentication');
+var db = require('../config/db');
 
 //
 // Hier gaat de gebruiker inloggen.
@@ -14,7 +15,7 @@ var auth = require('../auth/authentication');
 router.post('/login', function(req, res) {
 
     // Even kijken wat de inhoud is
-    console.dir(req.body);
+    console.dir(req.body.username + ' | ' + req.body.password + ", door u ingevoerd.");
 
     // De username en pwd worden meegestuurd in de request body
     var username = req.body.username;
@@ -22,20 +23,34 @@ router.post('/login', function(req, res) {
 
     // Dit is een dummy-user - die haal je natuurlijk uit de database.
     // Momenteel zetten we ze als environment variabelen. (Ook op Heroku!)
-    var _dummy_username = "username";
-    var _dummy_password = "test";
+    // var _dummy_username = "username";
+    // var _dummy_password = "test";
+
+    db.query('SELECT customer_id FROM customer WHERE customer_id = ? AND password = ?;', [username, password], function(error, rows, fields) {
+        if (rows.length > 0) {
+            console.log('Input: username = ' + username + ', password = ' + password + ' IS CORRECT');
+                var token = auth.encodeToken(username);
+                res.status(200).json({
+                    "token": token,
+                    "melding" : "Yo waddap gasten."
+                });
+        } else {
+            console.log('Input: username = ' + username + ', password = ' + password + ' IS INCORRECT');
+            res.status(401).json({ "error": " INCORRECT" })
+        }
+    });
 
     // Kijk of de gegevens matchen. Zo ja, dan token genereren en terugsturen.
-    if (username == _dummy_username && password == _dummy_password) {
-        var token = auth.encodeToken(username);
-        res.status(200).json({
-            "token": token,
-            "Mikey: " : "Yo waddap gasten."
-        });
-    } else {
-        console.log('Input: username = ' + username + ', password = ' + password);
-        res.status(401).json({ "error": "Onjuist, dikke vette peace." })
-    }
+    // if (username == _dummy_username && password == _dummy_password) {
+    //     var token = auth.encodeToken(username);
+    //     res.status(200).json({
+    //         "token": token,
+    //         "Mikey: " : "Yo waddap gasten."
+    //     });
+    // } else {
+    //     console.log('Input: username = ' + username + ', password = ' + password);
+    //     res.status(401).json({ "error": "Onjuist, dikke vette peace." })
+    // }
 
 });
 
