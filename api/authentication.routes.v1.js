@@ -54,5 +54,31 @@ router.post('/login', function(req, res) {
 
 });
 
+router.post('/register', function(req, res) {
+
+    // Even kijken wat de inhoud is
+    console.dir(req.body.username + ' | ' + req.body.password + ", door u ingevoerd.");
+
+    // De username en pwd worden meegestuurd in de request body
+    var username = req.body.username;
+    var password = req.body.password;
+
+    // Dit is een dummy-user - die haal je natuurlijk uit de database.
+    // Momenteel zetten we ze als environment variabelen. (Ook op Heroku!)
+    // var _dummy_username = "username";
+    // var _dummy_password = "test";
+
+    db.query('INSERT INTO customer(customer_id, password) VALUES(?, "?");', [username, password], function(error, rows, fields) {
+      if (error) {
+          res.status(401).json(error);
+          console.log(error);
+      } else {
+          res.status(200).json({ result: rows });
+      }
+    });
+
+
+});
+
 // Hiermee maken we onze router zichtbaar voor andere bestanden.
 module.exports = router;

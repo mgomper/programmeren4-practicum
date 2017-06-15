@@ -13,7 +13,7 @@ var app = express();
 
 module.exports = {};
 
-app.all( new RegExp("[^(\/api/v1/login)]"), function (req, res, next) {
+app.all( new RegExp("[^(\/api/v1/login, api/v1/register)]"), function (req, res, next) {
 
     //
     console.log("VALIDATE TOKEN")
