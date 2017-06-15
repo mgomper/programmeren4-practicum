@@ -13,23 +13,23 @@ var app = express();
 
 module.exports = {};
 
-// app.all( new RegExp("[^(\/login)]"), function (req, res, next) {
-//
-//     //
-//     console.log("VALIDATE TOKEN")
-//
-//     var token = (req.header('Authorization')) || '';
-//
-//     auth.decodeToken(token, function (err, payload) {
-//         if (err) {
-//           res.json({"error: "  : "onjuiste authorisatie"});
-//             console.log('Error handler: ' + err.message);
-//             res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
-//         } else {
-//             next();
-//         }
-//     });
-// });
+app.all( new RegExp("[^(\/api/v1/login)]"), function (req, res, next) {
+
+    //
+    console.log("VALIDATE TOKEN")
+
+    var token = (req.header('Authorization')) || '';
+
+    auth.decodeToken(token, function (err, payload) {
+        if (err) {
+          res.json({"error: "  : "onjuiste authorisatie"});
+            console.log('Error handler: ' + err.message);
+            res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
+        } else {
+            next();
+        }
+    });
+});
 // bodyParser zorgt dat we de body uit een request kunnen gebruiken,
 // hierin zit de inhoud van een POST request.
 app.use(bodyParser.urlencoded({ 'extended': 'true' })); // parse application/x-www-form-urlencoded

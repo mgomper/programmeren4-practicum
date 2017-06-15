@@ -2,6 +2,24 @@ var express = require('express');
 var router = express.Router();
 var db = require('../config/db');
 
+router.all( new RegExp("[^(\/)]"), function (req, res, next) {
+
+    //
+    console.log("VALIDATE TOKEN")
+
+    var token = (req.header('Authorization')) || '';
+
+    auth.decodeToken(token, function (err, payload) {
+        if (err) {
+          res.json({"error: "  : "onjuiste authorisatie"});
+            console.log('Error handler: ' + err.message);
+            res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
+        } else {
+            next();
+        }
+    });
+});
+
 router.post('/rentals/:userid/:inventoryid', function(req, res) {
 
     var user = req.params.userid;
