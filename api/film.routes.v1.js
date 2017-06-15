@@ -23,19 +23,34 @@ routes.post('/rentals/:userid/:inventoryid', function(req, res) {
 });
 
 
+//uitlening verwijderen
+routes.delete('/rentals/:userid/:inventoryid', function(req, res) {
+
+    var user = req.params.userid;
+    var inventory = req.params.inventoryid;
+
+
+    res.contentType('application/json');
+
+    db.query('DELETE FROM rental WHERE customer_id=? AND inventory_id=?', [user, inventory], function(error, rows, fields) {
+        if (error) {
+            res.status(401).json(error);
+        } else {
+            res.status(200).json({ result: rows });
+        };
+    });
+});
+
+//uitlening wijzigen
 routes.put('/rentals/:userid/:inventoryid', function(req, res) {
 
     // var user = req.params.userid;
     // var inventory = req.params.inventoryid;
-    var user = req.body;
-    var query = {
-        sql: 'UPDATE rental SET inventory_id=? WHERE customer_id=? ',
-        values: [user.customer_id, user.inventory_id],
-        timeout: 2000 // 2secs
-    };
+    var user = req.params.userid;
+    var inventory = req.params.inventoryid;
 
     res.contentType('application/json');
-    db.query(query, function(error, rows, fields) {
+    db.query('UPDATE rental SET inventory_id=? WHERE customer_id=?', [user, inventory], function(error, rows, fields) {
         if (error) {
             res.status(401).json(error);
         } else {
