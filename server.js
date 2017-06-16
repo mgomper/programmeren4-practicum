@@ -3,8 +3,9 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var logger = require('morgan');
 var db = require('./config/db');
-// var todoroutes_v1 = require('./api/todo.routes.v1');
-// var auth_routes_v1 = require('./api/authentication.routes.v1');
+var auth = require('./auth/authentication');
+var apiroutes_v1 = require('./api/film.routes.v1');
+var auth_routes_v1 = require('./api/authentication.routes.v1');
 var config = require('./config/config');
 var expressJWT = require('express-jwt');
 
@@ -12,6 +13,23 @@ var app = express();
 
 module.exports = {};
 
+app.all( new RegExp("[^(\/api/v1/login, api/v1/register)]"), function (req, res, next) {
+
+    //
+    console.log("VALIDATE TOKEN")
+
+    var token = (req.header('Authorization')) || '';
+
+    auth.decodeToken(token, function (err, payload) {
+        if (err) {
+          res.json({"error: "  : "onjuiste authorisatie"});
+            console.log('Error handler: ' + err.message);
+            res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
+        } else {
+            next();
+        }
+    });
+});
 // bodyParser zorgt dat we de body uit een request kunnen gebruiken,
 // hierin zit de inhoud van een POST request.
 app.use(bodyParser.urlencoded({ 'extended': 'true' })); // parse application/x-www-form-urlencoded
@@ -31,8 +49,8 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.set('port', (process.env.PORT | config.webPort));
 app.set('env', (process.env.ENV | 'development'))
 
-// app.use('/api/v1', auth_routes_v1);
-// app.use('/api/v1', todoroutes_v1);
+app.use('/api/v1', auth_routes_v1);
+app.use('/api/v1', apiroutes_v1);
 
 app.use(function(err, req, res, next) {
     // console.dir(err);
@@ -56,6 +74,7 @@ app.get('/films', function(req, res) {
         };
     });
 });
+
 
 app.use('*', function(req, res) {
     res.status(400);
