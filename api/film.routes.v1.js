@@ -4,7 +4,7 @@ var routes = express.Router();
 var db = require('../config/db');
 
 
-// Geef een lijst van alle films 
+// Geef een lijst van alle films
 routes.get('/films', function(req, res) {
 
     res.contentType('application/json');
@@ -72,28 +72,28 @@ routes.get('/rentals/:rental_id', function(req, res) {
 
 
 // Endpoint 6 - Maakt een nieuwe uitlening voor de gegeven gebruiker van het exemplaar met gegeven inventory_id.
+// routes.post('/rentals/:userid/:inventoryid', function(req, res) {
+//
+//
+// router.all( new RegExp("[^(\/)]"), function (req, res, next) {
+//
+//     //
+//     console.log("VALIDATE TOKEN")
+//
+//     var token = (req.header('Authorization')) || '';
+//
+//     auth.decodeToken(token, function (err, payload) {
+//         if (err) {
+//           res.json({"error: "  : "onjuiste authorisatie"});
+//             console.log('Error handler: ' + err.message);
+//             res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
+//         } else {
+//             next();
+//         }
+//     });
+// });
+
 routes.post('/rentals/:userid/:inventoryid', function(req, res) {
-
-
-router.all( new RegExp("[^(\/)]"), function (req, res, next) {
-
-    //
-    console.log("VALIDATE TOKEN")
-
-    var token = (req.header('Authorization')) || '';
-
-    auth.decodeToken(token, function (err, payload) {
-        if (err) {
-          res.json({"error: "  : "onjuiste authorisatie"});
-            console.log('Error handler: ' + err.message);
-            res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
-        } else {
-            next();
-        }
-    });
-});
-
-router.post('/rentals/:userid/:inventoryid', function(req, res) {
 
 
     var user = req.params.userid;
@@ -149,6 +149,3 @@ routes.delete('/rentals/:userid/:inventoryid', function(req, res) {
 
 
 module.exports = routes;
-
-
-

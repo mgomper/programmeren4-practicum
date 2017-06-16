@@ -5,7 +5,7 @@ var logger = require('morgan');
 var db = require('./config/db');
 
 var filmroutes_v1 = require('./api/film.routes.v1');
-// var auth_routes_v1 = require('./api/authentication.routes.v1');
+var auth_routes_v1 = require('./api/authentication.routes.v1');
 
 var auth = require('./auth/authentication');
 
