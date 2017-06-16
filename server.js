@@ -3,7 +3,6 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var logger = require('morgan');
 var db = require('./config/db');
-
 var filmroutes_v1 = require('./api/film.routes.v1');
 var auth_routes_v1 = require('./api/authentication.routes.v1');
 
@@ -56,7 +55,6 @@ app.set('env', (process.env.ENV | 'development'))
 
 
 app.use('/api/v1', filmroutes_v1);
-
 app.use('/api/v1', auth_routes_v1);
 
 
@@ -72,17 +70,17 @@ app.use(function(err, req, res, next) {
     res.status(401).send(error);
 });
 
-app.get('/films', function(req, res) {
-    res.contentType('application/json');
-
-    db.query('SELECT * FROM film', function(error, rows, fields) {
-        if (error) {
-            res.status(401).json(error);
-        } else {
-            res.status(200).json({ result: rows });
-        };
-    });
-});
+// app.get('/films', function(req, res) {
+//     res.contentType('application/json');
+//
+//     db.query('SELECT * FROM film', function(error, rows, fields) {
+//         if (error) {
+//             res.status(401).json(error);
+//         } else {
+//             res.status(200).json({ result: rows });
+//         };
+//     });
+// });
 
 
 app.use('*', function(req, res) {
