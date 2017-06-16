@@ -45,18 +45,6 @@ app.use(function(err, req, res, next) {
     res.status(401).send(error);
 });
 
-app.get('/films', function(req, res) {
-    res.contentType('application/json');
-
-    db.query('SELECT * FROM film', function(error, rows, fields) {
-        if (error) {
-            res.status(401).json(error);
-        } else {
-            res.status(200).json({ result: rows });
-        };
-    });
-});
-
 app.use('*', function(req, res) {
     res.status(400);
     res.json({
