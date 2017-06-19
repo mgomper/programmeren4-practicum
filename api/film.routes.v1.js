@@ -87,18 +87,37 @@ routes.get('/filmres/:customer_id/:inventory_id', function(req, res) {
 
 
 // Endpoint 5 - Alle uitgeleende films aan de hand van rental_id
-routes.get('/rentals/:rental_id', function(req, res) {
+routes.get('/rentals/:userid', function(req, res) {
 
-    var rentalId = req.params.rental_id;
+    var userId = req.params.userid;
 
     res.contentType('application/json');
 
-    db.query('SELECT * FROM rental WHERE rental_id=?', [rentalId], function(error, rows, fields) {
+    db.query('SELECT '  +
+        'film.film_id, ' +
+        'film.title, ' +
+        'film.description, ' +
+        'film.release_year, ' +
+        'film.length, ' +
+        'film.rating, ' +
+        'film.special_features, ' +
+        'inventory.inventory_id, ' +
+        'rental.rental_id, ' +
+        'rental.rental_date, ' +
+        'rental.return_date, ' +
+        'customer.first_name, ' +
+        'customer.customer_id, ' +
+        'customer.active ' +
+        'FROM film ' +
+        'LEFT JOIN inventory USING(film_id) ' +
+        'LEFT JOIN rental USING(inventory_id) ' +
+        'LEFT JOIN customer USING(customer_id) ' +
+        'WHERE customer_id=?;', [userId], function(error, rows, fields) {
         if (error) {
             res.status(401).json(error);
         } else {
             res.status(200).json({ result: rows });
-        };
+        }
     });
 });
 
