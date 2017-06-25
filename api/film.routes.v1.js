@@ -57,7 +57,7 @@ routes.get('/rentalcount/:inv_id', function(req, res) {
 
     res.contentType('application/json');
 
-    db.query('SELECT COUNT(inventory_id)* FROM rental WHERE inventory_id=?', [Inventoryid], function(error, rows, fields) {
+    db.query('SELECT COUNT(inventory_id) FROM rental WHERE inventory_id=?', [Inventoryid], function(error, rows, fields) {
         if (error) {
             res.status(401).json(error);
         } else {
