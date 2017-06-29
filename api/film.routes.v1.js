@@ -51,7 +51,20 @@ routes.get("/films", function(req, res){
     });
 });
 
+routes.get('/rentalcount/:inv_id', function(req, res) {
 
+    var Inventoryid = req.params.inv_id;
+
+    res.contentType('application/json');
+
+    db.query('SELECT COUNT(inventory_id) FROM rental WHERE inventory_id=?', [Inventoryid], function(error, rows, fields) {
+        if (error) {
+            res.status(401).json(error);
+        } else {
+            res.status(200).json({ result: rows });
+        };
+    });
+});
 
 // Endpoint 4 - Film informatie ophalen aan de hand van film_id
 routes.get('/films/:film_id', function(req, res) {
