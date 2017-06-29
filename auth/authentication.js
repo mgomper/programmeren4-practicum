@@ -4,7 +4,7 @@ const jwt = require('jwt-simple');
 
 //
 // Encode (van username naar token)
-//
+// Token gemaakt
 
 function encodeToken(username) {
     const playload = {
