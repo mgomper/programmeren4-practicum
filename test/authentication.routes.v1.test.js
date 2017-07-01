@@ -19,6 +19,8 @@ describe('Auth API v1', function() {
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.be.a('object');
+                res.body.should.have.property('message').equal('No authorization token was found');
+                res.body.should.have.property('name').equal('UnauthorizedError');
                 done();
             });
     });
