@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 var getToken = function() {
     var user = {
         username: "46",
-        password: "test"
+        password: "'test'"
     }
     chai.request(server)
         .post('/api/v1/login')
