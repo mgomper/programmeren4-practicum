@@ -20,6 +20,7 @@ var getToken = function() {
       "username": "46",
       "password": "'test'"
     }
+
     chai.request(server)
         .post('/api/v1/login')
         .set('Content-Type', 'application/json')
@@ -27,6 +28,7 @@ var getToken = function() {
         .end(function(err, res) {
             res.body.should.be.an('object');
             res.body.should.have.property('token');
+            res.should.have.status(200);
             // Bewaar het token in de globale variabele, zodat de tests het token kunnen gebruiken.
             value = res.body.token;
         });
@@ -58,7 +60,7 @@ describe('Get a token', function() {
             .send(testuser)
             .end(function(err, res) {
               res.body.should.have.property('token');
-                // we doen hier niets - we willen alleen het token dat opgehaald is.
+              res.should.have.status(200);
                 done();
             });
     });
@@ -73,7 +75,39 @@ describe('Get a valid token', function() {
             .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
             .end(function(err, res) {
               res.body.should.have.property('result').that.is.an('array');
+              res.should.have.status(200);
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
+                done();
+            });
+    });
+});
+
+describe('Get a valid token', function() {
+    // Hier start een testcase
+    it('should return a valid token', function(done) {
+        chai.request(server)
+            .get('/api/v1/films/1')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
+            .end(function(err, res) {
+              res.body.should.have.property('result').that.is.an('array');
+              res.should.have.status(200);
+                // we doen hier niets - we willen alleen het token dat opgehaald is.
+                done();
+            });
+    });
+});
+
+describe('Get a valid token', function() {
+    // Hier start een testcase
+    it('should return a valid token', function(done) {
+        chai.request(server)
+            .get('/api/v1/films/1')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
+            .end(function(err, res) {
+            res.body.should.have.property('result').that.is.an('array');
+            res.should.have.status(200);
                 done();
             });
     });
@@ -88,6 +122,7 @@ describe('Get a valid token', function() {
             .set('Authorization', 'geen valide token')
             .end(function(err, res) {
               res.body.should.not.have.property('result').that.is.an('array');
+              res.should.have.status(401);
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
                 done();
             });
