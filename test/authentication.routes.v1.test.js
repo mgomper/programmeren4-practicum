@@ -41,8 +41,7 @@ describe('Get a token', function() {
         chai.request(server)
             .post('/api/v1/login')
             .set('Content-Type', 'application/json')
-            .send({	"username": "46",
-	                   "password": "'test'"})
+            .send(testuser)
             .end(function(err, res) {
               res.body.should.have.property('token');
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
