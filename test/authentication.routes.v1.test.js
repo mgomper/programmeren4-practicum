@@ -38,6 +38,7 @@ describe('Get a valid token', function() {
     it('should return a valid token', function(done) {
         chai.request(server)
             .get('/api/v1/films')
+            .set('Content-Type', 'application/json')
             .set('Authorization', value)
             .end(function(err, res) {
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
