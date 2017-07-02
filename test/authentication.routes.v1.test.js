@@ -8,6 +8,10 @@ var chaiHttp = require('chai-http');
 var server = require('../server.js');
 var chould = chai.should();
 var value;
+var testuser = {
+  "username": "46",
+  "password": "'test'"
+}
 
 chai.use(chaiHttp);
 
@@ -37,7 +41,7 @@ describe('Get a token', function() {
         chai.request(server)
             .get('/api/v1/login')
             .set('Content-Type', 'application/json')
-            .set('Authorization', value)
+            .send(testuser)
             .end(function(err, res) {
               res.body.should.have.property('token');
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
