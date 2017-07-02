@@ -23,7 +23,7 @@ var getToken = function() {
             res.body.should.be.an('object');
             res.body.should.have.property('token');
             // Bewaar het token in de globale variabele, zodat de tests het token kunnen gebruiken.
-            token = res.body.token;
+            value = res.body.token;
         });
 }
 
