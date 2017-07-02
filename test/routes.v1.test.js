@@ -70,11 +70,6 @@ describe('Get a specific rental', function() {
             .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
             .end(function(err, res) {
               res.body.should.have.property('result').that.is.an('array');
-              res.body.should.have.property('film_id');
-              res.body.should.have.property('title');
-              res.body.should.have.property('description');
-              res.body.should.have.property('active');
-              res.body.should.have.property('customer_id');
               res.should.have.status(200);
                 done();
             });
@@ -105,7 +100,7 @@ describe('Get a no auth message', function() {
             .set('Authorization', 'geen valide token')
             .end(function(err, res) {
               res.body.should.not.have.property('result').that.is.an('array');
-              res.body.should.have.property('error');
+              res.body.should.have.property('error:');
                 done();
             });
     });
@@ -119,7 +114,7 @@ describe('Get a rental count', function() {
             .set('Content-Type', 'application/json')
             .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
             .end(function(err, res) {
-              res.body.should.have.property('COUNT(inventory_id)');
+              res.body.should.have.property('"COUNT(inventory_id)"');
               res.should.have.status(200);
                 done();
             });
