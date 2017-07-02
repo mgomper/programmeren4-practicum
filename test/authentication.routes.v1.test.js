@@ -65,6 +65,21 @@ describe('Get a valid token', function() {
     });
 });
 
+describe('Get a valid token', function() {
+    // Hier start een testcase
+    it('should return a valid token', function(done) {
+        chai.request(server)
+            .get('/api/v1/rentals/1')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'geen valide token')
+            .end(function(err, res) {
+              res.body.should.not.have.property('result').that.is.an('array');
+                // we doen hier niets - we willen alleen het token dat opgehaald is.
+                done();
+            });
+    });
+});
+
 
 describe('Auth API v1', function() {
 //kijkt simpelweg of er een object binnenkomt
