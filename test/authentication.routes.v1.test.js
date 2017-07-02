@@ -39,9 +39,10 @@ describe('Get a token', function() {
     // Hier start een testcase
     it('should return a valid token', function(done) {
         chai.request(server)
-            .get('/api/v1/login')
+            .post('/api/v1/login')
             .set('Content-Type', 'application/json')
-            .send(testuser)
+            .send({	"username": "46",
+	                   "password": "'test'"})
             .end(function(err, res) {
               res.body.should.have.property('token');
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
