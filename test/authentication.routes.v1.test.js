@@ -37,7 +37,7 @@ describe('Get a valid token', function() {
     // Hier start een testcase
     it('should return a valid token', function(done) {
         chai.request(server)
-            .get('/api/v1/todos')
+            .get('/api/v1/films')
             .set('Authorization', value)
             .end(function(err, res) {
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
