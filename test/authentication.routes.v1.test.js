@@ -23,7 +23,7 @@ var getToken = function() {
     chai.request(server)
         .post('/api/v1/login')
         .set('Content-Type', 'application/json')
-        .send(user)
+        .send(testuser)
         .end(function(err, res) {
             res.body.should.be.an('object');
             res.body.should.have.property('token');
