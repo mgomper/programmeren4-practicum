@@ -51,19 +51,14 @@ describe('Get a token', function() {
 });
 
 describe('Get a valid token', function() {
-
-    // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
-    before(function() {
-        getToken();
-    });
-
     // Hier start een testcase
     it('should return a valid token', function(done) {
         chai.request(server)
-            .get('/api/v1/films')
+            .get('/api/v1/rentals/1')
             .set('Content-Type', 'application/json')
-            .set('Authorization', value)
+            .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
             .end(function(err, res) {
+              res.body.should.have.property('result').that.is.an('array');
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
                 done();
             });
