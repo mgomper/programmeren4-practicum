@@ -84,7 +84,6 @@ describe('Get a specific film', function() {
             .set('Authorization', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTkxNzIzMzksImlhdCI6MTQ5ODk5OTUzOSwic3ViIjoiNDYifQ.OF01Vu_gMIw_RUpv9Hnjo0Win0RDIjOcQv6tqWwuc5M')
             .end(function(err, res) {
               res.body.should.have.property('result').that.is.an('array');
-
               res.should.have.status(200);
                 done();
             });

@@ -1,7 +1,7 @@
 {
     "name": "server",
     "version": "1.0.0",
-    "description": "mijn eerste node server",
+    "description": "prog server",
     "main": "server.js",
     "scripts": {
         "test": "node node_modules/mocha/bin/_mocha ./test/*test.js --reporter spec",
@@ -10,17 +10,17 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/rschellius/node-eersteserver.git"
+        "url": "https://github.com/mgomper/programmeren4-practicum-server"
     },
     "keywords": [
         "node",
         "server"
     ],
-    "author": "Robin",
+    "author": "groep",
     "license": "ISC",
-    "homepage": "https://github.com/rschellius/node-eersteserver#readme",
+    "homepage": "https://github.com/mgomper/programmeren4-practicum-server",
     "bugs": {
-        "url": "https://github.com/rschellius/node-eersteserver/issues"
+        "url": "https://github.com/mgomper/programmeren4-practicum-server"
     },
     "dependencies": {
         "body-parser": "^1.17.2",
