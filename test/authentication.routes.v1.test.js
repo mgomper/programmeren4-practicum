@@ -26,6 +26,25 @@ var getToken = function() {
         });
 }
 
+describe('Get a valid token', function() {
+
+    // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
+    before(function() {
+        getToken();
+    });
+
+    // Hier start een testcase
+    it('should return a valid token', function(done) {
+        chai.request(server)
+            .get('/api/v1/todos')
+            .set('Authorization', token)
+            .end(function(err, res) {
+                // we doen hier niets - we willen alleen het token dat opgehaald is.
+                done();
+            });
+    });
+});
+
 
 describe('Auth API v1', function() {
 //kijkt simpelweg of er een object binnenkomt
