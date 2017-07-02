@@ -19,7 +19,6 @@ describe('Auth API v1', function() {
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.be.a('object');
-                res.body.should.have.property('error');
                 done();
             });
     });
