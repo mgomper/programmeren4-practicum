@@ -7,7 +7,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../server.js');
 var chould = chai.should();
-var token;
+var value;
 
 chai.use(chaiHttp);
 
@@ -38,7 +38,7 @@ describe('Get a valid token', function() {
     it('should return a valid token', function(done) {
         chai.request(server)
             .get('/api/v1/todos')
-            .set('Authorization', token)
+            .set('Authorization', value)
             .end(function(err, res) {
                 // we doen hier niets - we willen alleen het token dat opgehaald is.
                 done();
