@@ -41,7 +41,7 @@ it('should register test account on POST at /api/v1/register', function(done){
                 res.should.be.json;
                 res.body.should.be.an('object');
                 res.body.should.have.property('code').that.is.a('string');
-                res.body.message.should.equal('ER_DUP_ENTRY');
+                res.body.code.should.equal('ER_DUP_ENTRY');
                 done();
             });
     });
