@@ -35,16 +35,13 @@ var getToken = function() {
 it('should register test account on POST at /api/v1/register', function(done){
         chai.request(server)
             .post('/api/v1/register')
-            .send({"username":"1", "password":"testje"})
+            .send({"username":"55", "password":"test"})
             .end( function(err, res){
                 res.should.have.status(401);
                 res.should.be.json;
                 res.body.should.be.an('object');
-                res.body.should.have.property('message').that.is.a('string');
-                res.body.should.have.property('token').that.is.a('string');
-                res.body.should.have.property('username').that.is.a('string');
-                res.body.message.should.equal('Successfully created user');
-                token = res.body.token;
+                res.body.should.have.property('code').that.is.a('string');
+                res.body.message.should.equal('ER_DUP_ENTRY');
                 done();
             });
     });
