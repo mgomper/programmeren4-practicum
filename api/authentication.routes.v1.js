@@ -51,7 +51,6 @@ router.post('/login', function(req, res) {
     //     console.log('Input: username = ' + username + ', password = ' + password);
     //     res.status(401).json({ "error": "Onjuist, dikke vette peace." })
     // }
-
 });
 
 router.post('/register', function(req, res) {

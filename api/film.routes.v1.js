@@ -191,7 +191,7 @@ routes.post('/rentals/:userid/:inventoryid', function(req, res) {
     });
 });
 
-
+ 
 
 // Endpoint 7 - Bestaande uitlening wijzigen
 routes.put('/rentals/:userid/:inventoryid', function(req, res) {
