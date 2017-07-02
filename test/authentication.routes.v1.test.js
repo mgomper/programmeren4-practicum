@@ -10,6 +10,23 @@ var chould = chai.should();
 
 chai.use(chaiHttp);
 
+var getToken = function() {
+    var user = {
+        username: "46",
+        password: "test"
+    }
+    chai.request(server)
+        .post('/api/v1/login')
+        .send(user)
+        .end(function(err, res) {
+            res.body.should.be.an('object');
+            res.body.should.have.property('token');
+            // Bewaar het token in de globale variabele, zodat de tests het token kunnen gebruiken.
+            token = res.body.token;
+        });
+}
+
+
 describe('Auth API v1', function() {
 //kijkt simpelweg of er een object binnenkomt
     it('returns UnauthorizedError on GET /api/v1/todos when not logged in', function(done) {
