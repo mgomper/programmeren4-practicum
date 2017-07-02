@@ -100,7 +100,7 @@ describe('Get a no auth message', function() {
             .set('Authorization', 'geen valide token')
             .end(function(err, res) {
               res.body.should.not.have.property('result').that.is.an('array');
-              res.body.should.have.property('error:');
+              res.body.should.have.property('error: ');
                 done();
             });
     });
