@@ -18,6 +18,7 @@ var getToken = function() {
     }
     chai.request(server)
         .post('/api/v1/login')
+        .set('Content-Type', 'application/json')
         .send(user)
         .end(function(err, res) {
             res.body.should.be.an('object');
