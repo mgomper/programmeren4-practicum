@@ -17,13 +17,13 @@ chai.use(chaiHttp);
 
 var getToken = function() {
     var user = {
-        username: "46",
-        password: "'test'"
+      "username": "46",
+      "password": "'test'"
     }
     chai.request(server)
         .post('/api/v1/login')
         .set('Content-Type', 'application/json')
-        .send(testuser)
+        .send(user)
         .end(function(err, res) {
             res.body.should.be.an('object');
             res.body.should.have.property('token');
