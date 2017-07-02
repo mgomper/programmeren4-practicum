@@ -28,6 +28,24 @@ var getToken = function() {
         });
 }
 
+describe('Get a token', function() {
+
+    // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
+
+    // Hier start een testcase
+    it('should return a valid token', function(done) {
+        chai.request(server)
+            .get('/api/v1/login')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', value)
+            .end(function(err, res) {
+              res.body.should.have.property('token');
+                // we doen hier niets - we willen alleen het token dat opgehaald is.
+                done();
+            });
+    });
+});
+
 describe('Get a valid token', function() {
 
     // Zorg dat we een token hebben zodat we de tests kunnen uitvoeren.
